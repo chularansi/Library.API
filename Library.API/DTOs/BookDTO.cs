@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Library.API.Data.Entities
+namespace Library.API.DTOs
 {
-    [Table("Book")]
-    public partial class Book
+    public class BookDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -17,6 +15,6 @@ namespace Library.API.Data.Entities
         public string Image { get; set; }
         public double? Price { get; set; }
         public int? AuthorId { get; set; }
-        public virtual Author Author { get; set; }  
+        public virtual AuthorDTO Author { get; set; }
     }
 }

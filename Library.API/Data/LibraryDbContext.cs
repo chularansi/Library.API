@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.API.Data
 {
-    public class LibraryDbContext : IdentityDbContext<LibraryUser>
+    public class LibraryDbContext : IdentityDbContext
     {
         public LibraryDbContext(DbContextOptions<LibraryDbContext> options) : base(options)
         {

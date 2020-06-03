@@ -4,8 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Library.API.Data;
-using Library.API.Data.Entities;
+using Library.API.Mappings;
 using Library.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,13 +39,15 @@ namespace Library.API
             //services.AddScoped<IAuthorRepository, AuthorRepository>();
             //services.AddScoped<IBookRepository, BookRepository>();
 
-            services.AddIdentity<LibraryUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<LibraryDbContext>();
 
             services.AddCors(o => {
                 o.AddPolicy("CorsPolicy", 
                     builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
+
+            services.AddAutoMapper(typeof(Maps));
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("V1", new OpenApiInfo {
