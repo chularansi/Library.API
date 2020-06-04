@@ -36,7 +36,7 @@ namespace Library.API
         {
             services.AddDbContext<LibraryDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnectionString")));
 
-            //services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
             //services.AddScoped<IBookRepository, BookRepository>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
