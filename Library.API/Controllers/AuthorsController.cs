@@ -17,13 +17,13 @@ namespace Library.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public class AuthorController : ControllerBase
+    public class AuthorsController : ControllerBase
     {
         private readonly IAuthorRepository authorRepository;
         private readonly ILoggerService logger;
         private readonly IMapper mapper;
 
-        public AuthorController(IAuthorRepository authorRepository, ILoggerService logger, IMapper mapper)
+        public AuthorsController(IAuthorRepository authorRepository, ILoggerService logger, IMapper mapper)
         {
             this.authorRepository = authorRepository;
             this.logger = logger;
@@ -39,6 +39,8 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAuthors()
         {
+            var errLocation = GetControllerAndActionNames();
+
             try
             {
                 var authors = await authorRepository.FindAll();
@@ -47,7 +49,7 @@ namespace Library.API.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorHandler($"{ex.Message} - {ex.InnerException}");
+                return ErrorHandler($"{errLocation} {ex.Message} - {ex.InnerException}");
             }
         }
 
@@ -62,6 +64,8 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAuthor(int id)
         {
+            var errLocation = GetControllerAndActionNames();
+
             try
             {
                 var author = await authorRepository.FindById(id);
@@ -75,7 +79,7 @@ namespace Library.API.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorHandler($"{ex.Message} - {ex.InnerException}");
+                return ErrorHandler($"{errLocation} {ex.Message} - {ex.InnerException}");
             }
         }
 
@@ -90,6 +94,8 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] AuthorCreateDTO authorDTO)
         {
+            var errLocation = GetControllerAndActionNames();
+
             try
             {
                 if (authorDTO == null)
@@ -112,7 +118,7 @@ namespace Library.API.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorHandler($"{ex.Message} - {ex.InnerException}");
+                return ErrorHandler($"{errLocation} {ex.Message} - {ex.InnerException}");
             }
         }
 
@@ -128,6 +134,8 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Update(int id, [FromBody] AuthorUpdateDTO authorDTO)
         {
+            var errLocation = GetControllerAndActionNames();
+
             try
             {
                 if (id < 1 || authorDTO == null || id != authorDTO.Id)
@@ -159,7 +167,7 @@ namespace Library.API.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorHandler($"{ex.Message} - {ex.InnerException}");
+                return ErrorHandler($"{errLocation} {ex.Message} - {ex.InnerException}");
             }
         }
 
@@ -175,6 +183,8 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
+            var errLocation = GetControllerAndActionNames();
+
             try
             {
                 if (id < 1)
@@ -199,7 +209,7 @@ namespace Library.API.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorHandler($"{ex.Message} - {ex.InnerException}");
+                return ErrorHandler($"{errLocation} {ex.Message} - {ex.InnerException}");
             }
         }
 
@@ -207,6 +217,14 @@ namespace Library.API.Controllers
         {
             logger.LogError(message);
             return StatusCode(500, "Something went wrong, Please contact the Administrator");
+        }
+
+        private string GetControllerAndActionNames()
+        {
+            var controller = ControllerContext.ActionDescriptor.ControllerName;
+            var action = ControllerContext.ActionDescriptor.ActionName;
+
+            return $"{controller} - {action}";
         }
     }
 }

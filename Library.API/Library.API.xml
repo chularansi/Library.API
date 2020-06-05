@@ -4,32 +4,32 @@
         <name>Library.API</name>
     </assembly>
     <members>
-        <member name="T:Library.API.Controllers.AuthorController">
+        <member name="T:Library.API.Controllers.AuthorsController">
             <summary>
             Endpoint used to interact with the Authors in the Liabrary Database
             </summary>
         </member>
-        <member name="M:Library.API.Controllers.AuthorController.GetAuthors">
+        <member name="M:Library.API.Controllers.AuthorsController.GetAuthors">
             <summary>
             Get All Authors
             </summary>
             <returns>List of Authors</returns>
         </member>
-        <member name="M:Library.API.Controllers.AuthorController.GetAuthor(System.Int32)">
+        <member name="M:Library.API.Controllers.AuthorsController.GetAuthor(System.Int32)">
             <summary>
             Get an Author by Id
             </summary>
             <param name="id"></param>
             <returns>An Author record</returns>
         </member>
-        <member name="M:Library.API.Controllers.AuthorController.Create(Library.API.DTOs.AuthorCreateDTO)">
+        <member name="M:Library.API.Controllers.AuthorsController.Create(Library.API.DTOs.AuthorCreateDTO)">
             <summary>
             Create an author
             </summary>
             <param name="author"></param>
             <returns></returns>
         </member>
-        <member name="M:Library.API.Controllers.AuthorController.Update(System.Int32,Library.API.DTOs.AuthorUpdateDTO)">
+        <member name="M:Library.API.Controllers.AuthorsController.Update(System.Int32,Library.API.DTOs.AuthorUpdateDTO)">
             <summary>
             Update an Author
             </summary>
@@ -37,27 +37,49 @@
             <param name="author"></param>
             <returns></returns>
         </member>
-        <member name="M:Library.API.Controllers.AuthorController.Delete(System.Int32)">
+        <member name="M:Library.API.Controllers.AuthorsController.Delete(System.Int32)">
             <summary>
             Remove an Author
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:Library.API.Controllers.HomeController">
+        <member name="T:Library.API.Controllers.BooksController">
             <summary>
-            Home Controller
+            Interacts with the Book Table
             </summary>
         </member>
-        <member name="M:Library.API.Controllers.HomeController.Get">
+        <member name="M:Library.API.Controllers.BooksController.GetBooks">
             <summary>
-            Get values
+            Get All Books
             </summary>
+            <returns>A list of Books</returns>
+        </member>
+        <member name="M:Library.API.Controllers.BooksController.GetBook(System.Int32)">
+            <summary>
+            Get a Book by Id
+            </summary>
+            <param name="id"></param>
+            <returns>A Book record</returns>
+        </member>
+        <member name="M:Library.API.Controllers.BooksController.Create(Library.API.DTOs.BookCreateDTO)">
+            <summary>
+            Create a Book
+            </summary>
+            <param name="book"></param>
+            <returns>Book Object</returns>
+        </member>
+        <member name="M:Library.API.Controllers.BooksController.Update(System.Int32,Library.API.DTOs.BookUpdateDTO)">
+            <summary>
+            Update a book
+            </summary>
+            <param name="id"></param>
+            <param name="book"></param>
             <returns></returns>
         </member>
-        <member name="M:Library.API.Controllers.HomeController.Get(System.Int32)">
+        <member name="M:Library.API.Controllers.BooksController.Delete(System.Int32)">
             <summary>
-            Get a value
+            Remove a Book
             </summary>
             <param name="id"></param>
             <returns></returns>
