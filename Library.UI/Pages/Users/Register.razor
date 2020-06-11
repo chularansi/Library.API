@@ -1,0 +1,60 @@
+﻿@page "/Register"
+
+@using Library.UI.Models
+@using Library.UI.Services
+
+@inject IAuthenticationRepository authRepo
+@inject NavigationManager navManager
+
+<div class="card">
+    <h3 class="card-title">Register Now</h3>
+    @if (isFailed)
+    {
+        <div class="alert alert-danger">
+            <p>Something went wrong with Registration attempt.</p>
+        </div>
+    }
+    
+    <div class="card-body">
+        <EditForm Model="RegModel" OnValidSubmit="HandleRegistration">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <InputText class="form-control" id="email" @bind-Value="RegModel.EmailAddress" />
+                <ValidationMessage For="@(() => RegModel.EmailAddress)" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText type="password" class="form-control" id="password" @bind-Value="RegModel.Password" />
+                <ValidationMessage For="@(() => RegModel.Password)" />
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword">Confirm Password</label>
+                <InputText type="password" class="form-control" id="confirmpassword" @bind-Value="RegModel.ConfirmPassword" />
+                <ValidationMessage For="@(() => RegModel.ConfirmPassword)" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private RegistrationModel RegModel = new RegistrationModel();
+    bool isFailed = false;
+
+    private async Task HandleRegistration()
+    {
+        var response = await authRepo.Register(RegModel);
+
+        if (response)
+        {
+            navManager.NavigateTo("/login");
+        }
+        else
+        {
+            isFailed = true;
+        }
+    }
+}

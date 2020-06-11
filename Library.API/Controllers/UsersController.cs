@@ -34,10 +34,47 @@ namespace Library.API.Controllers
         }
 
         /// <summary>
+        /// User Register
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [Route("register")]
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] UserDTO userDTO)
+        {
+            var errLocation = GetControllerAndActionNames();
+
+            try
+            {
+                var username = userDTO.EmailAddress;
+                var password = userDTO.Password;
+
+                var user = new IdentityUser { Email = username, UserName = username };
+                var result = await userManager.CreateAsync(user, password);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        logger.LogError($"{errLocation}: {error.Code} {error.Description}");
+                    }
+                    return ErrorHandler($"{errLocation}: {username} User Registration attempted failed.");
+                }
+
+                return Ok(new { result.Succeeded });
+            }
+            catch (Exception ex)
+            {
+                return ErrorHandler($"{errLocation}: {ex.Message} - {ex.InnerException}");
+            }
+        }
+
+        /// <summary>
         /// User Login endpoint
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
+        [Route("login")]
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
@@ -46,7 +83,7 @@ namespace Library.API.Controllers
 
             try
             {
-                var username = userDTO.Username;
+                var username = userDTO.EmailAddress;
                 var password = userDTO.Password;
 
                 logger.LogInfo($"{errLocation}: Login attempt from user {username}");

@@ -84,6 +84,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Library.API.Controllers.UsersController.Register(Library.API.DTOs.UserDTO)">
+            <summary>
+            User Register
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
         <member name="M:Library.API.Controllers.UsersController.Login(Library.API.DTOs.UserDTO)">
             <summary>
             User Login endpoint
