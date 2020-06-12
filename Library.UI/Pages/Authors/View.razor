@@ -1,0 +1,102 @@
+﻿@page "/authors/view/{Id}"
+
+@inject IAuthorRepository authRepo
+@inject NavigationManager navManager
+@*@inject IToastService toastService*@
+
+<h3 class="card-title">View Author Details</h3>
+<hr />
+<br />
+@if (int.Parse(Id) < 1 || string.IsNullOrWhiteSpace(Id))
+{
+    <ErrorMessage Message="Invalid Selection. Please Try Again" />
+}
+else if (authorModel == null)
+{
+    <LoadingMessage Message="Loading Author Details" />
+}
+else
+{
+    //_toastService.ShowInfo($"Now Viewing {authorModel.FirstName} {authorModel.LastName}", "");
+    <div class="col-md-4">
+        <table class="table table-responsive">
+            <tr>
+                <td>First Name</td>
+                <td>@authorModel.FirstName</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>@authorModel.LastName</td>
+            </tr>
+            <tr>
+                <td>Biography</td>
+                <td>@authorModel.Bio</td>
+            </tr>
+        </table>
+        <br />
+        @if (authorModel.Books == null || authorModel.Books.Count < 1)
+        {
+            <div class="alert alert-dismissible alert-secondary">
+                No Books for this Author
+            </div>
+        }
+        else
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    <h4>Author's Books</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var book in authorModel.Books)
+                    {
+                        <li class="list-group-item">@book.Title - @book.Price </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}
+<br />
+
+
+<button @onclick="GoToEdit" class="btn btn-outline-warning">
+    <span class="oi oi-pencil"></span>
+    Edit Author
+</button>
+<button @onclick="GoToDelete" class="btn btn-outline-danger">
+    <span class="oi oi-circle-x"></span>
+    Delete Author
+</button>
+<button @onclick="BackToList" class="btn btn-outline-secondary">
+    <span class="oi oi-media-skip-backward"></span>
+    Back To List
+</button>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private AuthorModel authorModel = new AuthorModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        int id = Convert.ToInt32(Id);
+        authorModel = await authRepo.Get(Endpoints.AuthorsEndpoint, id);
+    }
+
+    private void BackToList()
+    {
+        navManager.NavigateTo("/authors/");
+    }
+
+    private void GoToEdit()
+    {
+        navManager.NavigateTo($"/authors/edit/{authorModel.Id}");
+    }
+
+    private void GoToDelete()
+    {
+        navManager.NavigateTo($"/authors/delete/{authorModel.Id}");
+    }
+
+}
