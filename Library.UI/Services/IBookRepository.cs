@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.UI.Services
 {
-    public interface IAuthorRepository : IBaseRepository<AuthorModel>
+    public interface IBookRepository : IBaseRepository<BookModel>
     {
     }
 }

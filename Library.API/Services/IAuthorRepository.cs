@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace Library.API.Services
 {
      public interface IAuthorRepository : IBaseRepository<Author>
-    {
-    }
+     {
+     }
 }

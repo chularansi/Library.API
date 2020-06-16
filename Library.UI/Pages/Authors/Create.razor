@@ -4,7 +4,7 @@
 
 @inject IAuthorRepository authRepo
 @inject NavigationManager navManager
-@*@inject IToastService _toastService*@
+@inject IToastService toastService
 
 
 <h3 class="card-title">Create New Author</h3>
@@ -50,7 +50,7 @@
         isSuccess = await authRepo.Create(Endpoints.AuthorsEndpoint, authorModel);
         if (isSuccess)
         {
-            //_toastService.ShowSuccess("Author Created Successfully", "");
+            toastService.ShowSuccess("Author Created Successfully", "");
             BackToList();
         }
     }

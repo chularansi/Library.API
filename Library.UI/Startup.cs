@@ -14,6 +14,7 @@ using Blazored.LocalStorage;
 using System.IdentityModel.Tokens.Jwt;
 using Library.UI.Providers;
 using Microsoft.AspNetCore.Components.Authorization;
+using Blazored.Toast;
 
 namespace Library.UI
 {
@@ -33,6 +34,7 @@ namespace Library.UI
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
+            services.AddBlazoredToast();
             services.AddScoped<ApiAuthenticationStateProvider>();
             services.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<ApiAuthenticationStateProvider>());
             //services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
@@ -40,6 +42,8 @@ namespace Library.UI
             services.AddHttpClient();
             services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IFileUpload, FileUpload>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

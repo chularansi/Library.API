@@ -2,7 +2,7 @@
 
 @inject IAuthorRepository authRepo
 @inject NavigationManager navManager
-@*@inject IToastService toastService*@
+@inject IToastService toastService
 
 <h3 class="card-title">View Author Details</h3>
 <hr />
@@ -17,7 +17,7 @@ else if (authorModel == null)
 }
 else
 {
-    //_toastService.ShowInfo($"Now Viewing {authorModel.FirstName} {authorModel.LastName}", "");
+    toastService.ShowInfo($"Now Viewing {authorModel.FirstName} {authorModel.LastName}", "");
     <div class="col-md-4">
         <table class="table table-responsive">
             <tr>

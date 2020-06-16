@@ -4,7 +4,7 @@
 
 @inject IAuthorRepository authRepo
 @inject NavigationManager navManager
-@*@inject IToastService _toastService*@
+@inject IToastService toastService
 
 <h3 class="card-title">Edit Author</h3>
 <hr />
@@ -68,7 +68,7 @@ else
         isSuccess = await authRepo.Update(Endpoints.AuthorsEndpoint, authorModel, authorModel.Id);
         if (isSuccess)
         {
-            //_toastService.ShowWarning("Author Updated Successfully", "");
+            toastService.ShowWarning("Author Updated Successfully", "");
             BackToList();
         }
 

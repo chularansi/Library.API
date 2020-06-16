@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Library.UI.Services
 {
-    interface IBaseRepository<T> where T : class
+    public interface IBaseRepository<T> where T : class
     {
         Task<IList<T>> Get(string url);
         Task<T> Get(string url, int id);
